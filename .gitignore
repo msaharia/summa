@@ -32,3 +32,5 @@ make.out
 Makefile-*
 # backup files
 *.backup
+#summa input and output directories
+summa_*
