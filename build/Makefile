@@ -13,22 +13,22 @@
 
 # Define core directory below which everything resides. This is the
 # parent directory of the 'build' directory
-##F_MASTER =
+F_MASTER = /d3/msaharia/summa
 
 # Define the Fortran Compiler. If you are using gfortran, then this needs
 # to be version 4.8 or higher. This variable is simply used to select the right
 # compiler flags in the ifeq statements in this Makefile. The compiler
 # executable is set separately as FC_EXE
-##FC =
+FC = ifort
 
 # Define the path for the compiler executable. This is the actual executable
 # that is invoked. For example, FC=gfortran and FC_EXE=/usr/bin-gfortran-mp-6
 # FC and FC_EXE have to be consistent
-##FC_EXE =
+FC_EXE = /opt/intel/composer_xe_2015.2.164/bin/intel64/ifort
 
 # Define the compiler environment. This is used in the ifeq statements in this
 # Makefile to set the include and library paths and the libraries
-##FC_ENV =
+FC_ENV = ifort
 
 # Define the NetCDF and LAPACK libraries and path to include files. Note
 # that the default paths defined are those that work for our compilers
