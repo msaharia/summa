@@ -21,6 +21,7 @@
 module tempAdjust_module
 ! data types
 USE nrtype
+USE globalData,only:realMissing     ! missing double precision number
 ! physical constants
 USE multiconst,only:Tfreeze         ! freezing point of pure water (K)
 USE multiconst,only:LH_fus          ! latent heat of fusion (J kg-1)
@@ -39,6 +40,7 @@ contains
  ! ************************************************************************************************
  subroutine tempAdjust(&
                        ! input: derived parameters
+                       computeVegFlux,              & ! intent(in): compute vegetation flux
                        canopyDepth,                 & ! intent(in): canopy depth (m)
                        ! input/output: data structures
                        mpar_data,                   & ! intent(in):    model parameters
@@ -59,6 +61,7 @@ contains
  implicit none
  ! ------------------------------------------------------------------------------------------------
  ! input: derived parameters
+ logical(lgt),intent(in)         :: computeVegFlux      ! flag to compute vegetation flux
  real(dp),intent(in)             :: canopyDepth         ! depth of the vegetation canopy (m)
  ! input/output: data structures
  type(var_dlength),intent(in)    :: mpar_data           ! model parameters
@@ -104,6 +107,10 @@ contains
  ! -----------------------------------------------------------------------------------------------------------------------------------------------------
 
  ! ** preliminaries
+ if(.not.computeVegFlux)then
+         scalarBulkVolHeatCapVeg = realMissing
+         return
+ endif
 
  ! compute the total canopy water (state variable: will not change)
  scalarCanopyWat = scalarCanopyLiq + scalarCanopyIce

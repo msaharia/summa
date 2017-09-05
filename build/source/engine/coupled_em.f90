@@ -455,6 +455,7 @@ contains
  ! adjust canopy temperature to account for new snow
  call tempAdjust(&
                  ! input: derived parameters
+                 computeVegFlux               & ! intent(in): compute vegetation flux
                  canopyDepth,                 & ! intent(in): canopy depth (m)
                  ! input/output: data structures
                  mpar_data,                   & ! intent(in):    model parameters
