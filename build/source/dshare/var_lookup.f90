@@ -117,6 +117,7 @@ MODULE var_lookup
  ! ***********************************************************************************************************
  type, public  ::  iLook_type
   integer(i4b)    :: hruId         = integerMissing  ! id defining hydrologic response unit (-)
+  integer(i4b)    :: gruId         = integerMissing  ! id defining grouped response unit (-)
   integer(i4b)    :: vegTypeIndex  = integerMissing  ! index defining vegetation type (-)
   integer(i4b)    :: soilTypeIndex = integerMissing  ! index defining soil type (-)
   integer(i4b)    :: slopeTypeIndex= integerMissing  ! index defining slope (-)

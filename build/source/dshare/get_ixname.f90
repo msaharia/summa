@@ -185,6 +185,7 @@ contains
  ! get the index of the named variables
  select case(trim(varName))
   case('hruId'          ); get_ixType = iLookTYPE%hruId              ! id defining HRU index
+  case('gruId'          ); get_ixType = iLookTYPE%gruId              ! id defining GRU index
   case('vegTypeIndex'   ); get_ixType = iLookTYPE%vegTypeIndex       ! index defining vegetation type
   case('soilTypeIndex'  ); get_ixType = iLookTYPE%soilTypeIndex      ! index defining soil type
   case('slopeTypeIndex' ); get_ixType = iLookTYPE%slopeTypeIndex     ! index defining slope

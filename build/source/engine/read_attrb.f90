@@ -269,7 +269,7 @@ end subroutine read_dimension
   select case(trim(varName))
 
    ! ** categorical data
-   case('hruId','vegTypeIndex','soilTypeIndex','slopeTypeIndex','downHRUindex')
+   case('hruId', 'gruId', 'vegTypeIndex','soilTypeIndex','slopeTypeIndex','downHRUindex')
 
     ! get the index of the variable
     varType = categorical
