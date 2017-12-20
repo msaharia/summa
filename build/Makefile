@@ -13,22 +13,22 @@
 
 # Define core directory below which everything resides. This is the
 # parent directory of the 'build' directory
-##F_MASTER =
+F_MASTER = /glade/p/work/manab/SHARP/summa
 
 # Define the Fortran Compiler. If you are using gfortran, then this needs
 # to be version 6 or higher. This variable is simply used to select the right
 # compiler flags in the ifeq statements in this Makefile. The compiler
 # executable is set separately as FC_EXE
-##FC =
+FC = ifort
 
 # Define the path for the compiler executable. This is the actual executable
 # that is invoked. For example, FC=gfortran and FC_EXE=/usr/bin-gfortran-mp-6
 # FC and FC_EXE have to be consistent
-##FC_EXE =
+FC_EXE = /glade/u/apps/ch/opt/ncarcompilers/0.4.1/mpi/ifort
 
 # Define the compiler environment. This is used in the ifeq statements in this
 # Makefile to set the include and library paths and the libraries
-##FC_ENV =
+FC_ENV = ifort
 
 # Define the NetCDF and LAPACK libraries and path to include files. Note
 # that the default paths defined are those that work for our compilers
@@ -50,9 +50,12 @@ ifeq "$(FC)" "gfortran"
  FLAGS_SUMMA = -p -g -Wall -ffree-line-length-none -fmax-errors=0 -fbacktrace -fcheck=bounds
 endif
 ifeq "$(FC)" "ifort"
- FLAGS_NOAH = -O0 -p -g -warn nounused -autodouble -noerror_limit -FR -auto -WB -traceback -fltconsistency
- FLAGS_COMM = -O0 -p -g -debug -warn all -check all -FR -auto -WB -traceback -fltconsistency -fpe0
- FLAGS_SUMMA = -O0 -p -g -debug -warn all -check all -FR -auto -WB -traceback -fltconsistency -fpe0
+# FLAGS_NOAH = -O0 -p -g -warn nounused -autodouble -noerror_limit -FR -auto -WB -traceback -fltconsistency
+# FLAGS_COMM = -O0 -p -g -debug -warn all -check all -FR -auto -WB -traceback -fltconsistency -fpe0
+# FLAGS_SUMMA = -O0 -p -g -debug -warn all -check all -FR -auto -WB -traceback -fltconsistency -fpe0
+ FLAGS_NOAH = -O1 -p -warn nounused -autodouble -noerror_limit -FR -auto -WB -fltconsistency
+ FLAGS_COMM = -O1 -p -warn all -FR -auto -WB -fltconsistency -fpe0
+ FLAGS_SUMMA = -O1 -p -warn all -FR -auto -WB -fltconsistency -fpe0
 endif
 ifeq "$(FC)" "pgfortran"
  FLAGS_NOAH = -O0 -pg -g -traceback -r8 -Mfree -Mbounds
@@ -88,10 +91,11 @@ endif
 
 # Intel fortran compiler
 ifeq "$(FC_ENV)" "ifort"
- NCDF_PATH = /opt/netcdf4-intel
- LAPK_PATH = /usr
+ NCDF_PATH = /glade/u/apps/ch/opt/netcdf/4.4.1.1/intel/17.0.1
+ LAPK_PATH = /glade/u/apps/opt/intel/2017u1/compilers_and_libraries/linux/mkl/lib/intel64 
  # define the lapack libraries
- LIBLAPACK = -L$(LAPK_PATH)/lib -llapack
+ #LIBLAPACK = -L$(LAPK_PATH)/lib -llapack
+ LIBLAPACK = $(NCAR_LIBS_MKL)
 endif
 
 # Portland compiler
