@@ -170,7 +170,8 @@ contains
 
  ! output: diagnostic variables
  scalarExfiltration      => flux_data%var(iLookFLUX%scalarExfiltration)%dat(1),     & ! intent(out):[dp]    exfiltration from the soil profile (m s-1)
- mLayerColumnOutflow     => flux_data%var(iLookFLUX%mLayerColumnOutflow)%dat        & ! intent(out):[dp(:)] column outflow from each soil layer (m3 s-1)
+ mLayerColumnOutflow     => flux_data%var(iLookFLUX%mLayerColumnOutflow)%dat,       & ! intent(out):[dp(:)] column outflow from each soil layer (m3 s-1)
+ drainableWater          => flux_data%var(iLookFLUX%drainableWater)%dat             & ! intent(out):[dp]    drainable water (m)
 
  )  ! end association to variables in data structures
 
@@ -389,7 +390,8 @@ contains
 
  ! output: diagnostic variables
  scalarExfiltration      => flux_data%var(iLookFLUX%scalarExfiltration)%dat(1),       & ! intent(out):[dp]    exfiltration from the soil profile (m s-1)
- mLayerColumnOutflow     => flux_data%var(iLookFLUX%mLayerColumnOutflow)%dat          & ! intent(out):[dp(:)] column outflow from each soil layer (m3 s-1)
+ mLayerColumnOutflow     => flux_data%var(iLookFLUX%mLayerColumnOutflow)%dat,         & ! intent(out):[dp(:)] column outflow from each soil layer (m3 s-1)
+ drainableWater          => flux_data%var(iLookFLUX%drainableWater)%dat               & ! intent(out):[dp(:)] column outflow from each soil layer (m3 s-1)
 
  )  ! end association to variables in data structures
  ! ***********************************************************************************************************************
@@ -408,19 +410,20 @@ contains
  do iLayer=nSoil,ixSaturation,-1  ! loop through "active" soil layers, from lowest to highest
   ! define drainable water in each layer (m)
   activePorosity = theta_sat(iLayer) - fieldCapacity ! "active" porosity (-)
-  drainableWater = mLayerDepth(iLayer)*(max(0._dp,mLayerVolFracLiq(iLayer) - fieldCapacity))/activePorosity
+  drainableWater(iLayer) = mLayerDepth(iLayer)*(max(0._dp,mLayerVolFracLiq(iLayer) - fieldCapacity))/activePorosity
+  print*,'drainableWater(iLayer)',drainableWater(iLayer)
   ! compute layer transmissivity
   if(iLayer==nSoil)then
-   zActive(iLayer) = drainableWater                                       ! water table thickness associated with storage in a given layer (m)
+   zActive(iLayer) = drainableWater(iLayer)                                       ! water table thickness associated with storage in a given layer (m)
    trTotal(iLayer) = tran0*(zActive(iLayer)/soilDepth)**zScale_TOPMODEL   ! total transmissivity for total depth zActive (m2 s-1)
    trSoil(iLayer)  = trTotal(iLayer)                                      ! transmissivity of water in a given layer (m2 s-1)
   else
-   zActive(iLayer) = zActive(iLayer+1) + drainableWater
+   zActive(iLayer) = zActive(iLayer+1) + drainableWater(iLayer)
    trTotal(iLayer) = tran0*(zActive(iLayer)/soilDepth)**zScale_TOPMODEL
    trSoil(iLayer)  = trTotal(iLayer) - trTotal(iLayer+1)
   end if
   !write(*,'(a,1x,i4,1x,10(f20.15,1x))') 'iLayer, mLayerMatricHeadLiq(iLayer), mLayerVolFracLiq(iLayer), zActive(iLayer), trTotal(iLayer), trSoil(iLayer) = ', &
-  !                                       iLayer, mLayerMatricHeadLiq(iLayer), mLayerVolFracLiq(iLayer), zActive(iLayer), trTotal(iLayer), trSoil(iLayer)
+  !                                       iLayer, drainableWater(iLayer), mLayerVolFracLiq(iLayer), zActive(iLayer), trTotal(iLayer), trSoil(iLayer)
  end do  ! looping through soil layers
 
  ! set un-used portions of the vectors to zero

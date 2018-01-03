@@ -641,6 +641,7 @@ contains
   case('mLayerBaseflow'                 ); get_ixflux = iLookFLUX%mLayerBaseflow                   ! baseflow from each soil layer (m s-1)
   case('mLayerColumnInflow'             ); get_ixflux = iLookFLUX%mLayerColumnInflow               ! total inflow to each layer in a given soil column (m3 s-1)
   case('mLayerColumnOutflow'            ); get_ixflux = iLookFLUX%mLayerColumnOutflow              ! total outflow from each layer in a given soil column (m3 s-1)
+  case('drainableWater'                 ); get_ixflux = iLookFLUX%drainableWater                   ! total outflow from each layer in a given soil column (m3 s-1)
   case('scalarSoilBaseflow'             ); get_ixflux = iLookFLUX%scalarSoilBaseflow               ! total baseflow from throughout the soil profile (m s-1)
   case('scalarSoilDrainage'             ); get_ixflux = iLookFLUX%scalarSoilDrainage               ! drainage from the bottom of the soil profile (m s-1)
   case('scalarAquiferRecharge'          ); get_ixflux = iLookFLUX%scalarAquiferRecharge            ! recharge to the aquifer (m s-1)

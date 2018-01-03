@@ -526,6 +526,7 @@ MODULE var_lookup
   integer(i4b)    :: mLayerBaseflow                  = integerMissing ! baseflow from each soil layer (m s-1)
   integer(i4b)    :: mLayerColumnInflow              = integerMissing ! total inflow to each layer in a given soil column (m3 s-1)
   integer(i4b)    :: mLayerColumnOutflow             = integerMissing ! total outflow from each layer in a given soil column (m3 s-1)
+  integer(i4b)    :: drainableWater                  = integerMissing ! total drainable water from each soil layer (m)
   integer(i4b)    :: scalarSoilBaseflow              = integerMissing ! total baseflow from throughout the soil profile (m s-1)
   integer(i4b)    :: scalarSoilDrainage              = integerMissing ! drainage from the bottom of the soil profile (m s-1)
   integer(i4b)    :: scalarAquiferRecharge           = integerMissing ! recharge to the aquifer (m s-1)
@@ -795,7 +796,7 @@ MODULE var_lookup
                                                                          51, 52, 53, 54, 55, 56, 57, 58, 59, 60,&
                                                                          61, 62, 63, 64, 65, 66, 67, 68, 69, 70,&
                                                                          71, 72, 73, 74, 75, 76, 77, 78, 79, 80,&
-                                                                         81, 82, 83, 84, 85, 86)
+                                                                         81, 82, 83, 84, 85, 86, 87)
 
  ! named variables: derivatives in model fluxes w.r.t. relevant state variables
  type(iLook_deriv),   public,parameter :: iLookDERIV    =iLook_deriv   (  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,&
